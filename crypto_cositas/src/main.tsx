@@ -6,7 +6,7 @@ import Footer from './components/Footer/footer.tsx'
 import CryptoMarket from './components/cryptomarket/cryptomarket.tsx'
 import './index.css'
 import './components/styles.css'
-
+import './components/cryptomarket/chart_styles.css'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Header />

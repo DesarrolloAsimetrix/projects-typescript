@@ -1,0 +1,24 @@
+.crypto-chart {
+    text-align: center;
+    margin-bottom: 20px;
+    border-top: 1px solid #d3d3d3;  /* Línea gris en el borde superior */
+    border-bottom: 1px solid #d3d3d3; /* Línea gris en el borde inferior */
+  }
+  
+  .days-selector button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .days-selector button.active {
+    background-color: #646363;
+    color: white;
+  }
+  
+  .days-selector button:hover {
+    background-color: #e0e0e0;
+  }
