@@ -1,0 +1,39 @@
+/* src/components/Header/Header.css */
+
+.header {
+  /*width: 80%;*/
+  width:100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between; /* Distribuye logo y enlaces en los extremos */
+  align-items: center;            /* Alinea verticalmente al centro */
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #d3d3d3;  /* Línea gris en el borde superior */
+  border-bottom: 1px solid #d3d3d3; /* Línea gris en el borde inferior */
+}
+
+.logo-container {
+  /* El logo se mantendrá a la izquierda */
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+}
+
+.nav-links {
+  display: flex;          /* Coloca los enlaces uno al lado del otro */
+  gap: 20px;              /* Añade espacio entre los enlaces */
+}
+
+.nav-links a {
+  text-decoration: none;  /* Elimina subrayado */
+  color: #333;            /* Color del texto */
+  font-size: 18px;        /* Tamaño de la fuente */
+}
+
+.nav-links a:hover {
+  color: #007bff;         /* Color al pasar el ratón por encima */
+}

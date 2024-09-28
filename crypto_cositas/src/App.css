@@ -40,3 +40,8 @@
 .read-the-docs {
   color: #888;
 }
+/* src/App.css */
+
+.app-container {
+  width: 100%;
+}
