@@ -8,8 +8,8 @@
   display: flex;
   justify-content: space-between; /* Distribuye logo y enlaces en los extremos */
   align-items: center;            /* Alinea verticalmente al centro */
-  padding: 20px;
-  background-color: #f5f5f5;
+  padding: 2px;
+  background-color: #f4fffd;
   border-top: 1px solid #d3d3d3;  /* Línea gris en el borde superior */
   border-bottom: 1px solid #d3d3d3; /* Línea gris en el borde inferior */
 }
@@ -19,8 +19,8 @@
 }
 
 .logo {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 
 .nav-links {
@@ -30,10 +30,10 @@
 
 .nav-links a {
   text-decoration: none;  /* Elimina subrayado */
-  color: #333;            /* Color del texto */
+  color: #011936;            /* Color del texto */
   font-size: 18px;        /* Tamaño de la fuente */
 }
 
 .nav-links a:hover {
-  color: #007bff;         /* Color al pasar el ratón por encima */
+  color: #4f7724;         /* Color al pasar el ratón por encima */
 }

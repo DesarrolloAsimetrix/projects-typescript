@@ -3,6 +3,7 @@
     margin-bottom: 20px;
     border-top: 1px solid #d3d3d3;  /* Línea gris en el borde superior */
     border-bottom: 1px solid #d3d3d3; /* Línea gris en el borde inferior */
+    width: 50%;
   }
   
   .days-selector button {
@@ -21,4 +22,9 @@
   
   .days-selector button:hover {
     background-color: #e0e0e0;
+  }
+
+  .chart-container {
+    display: flex;
+    justify-content: center;
   }

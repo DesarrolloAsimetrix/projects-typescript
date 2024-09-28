@@ -3,20 +3,23 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f3f4f6;
+    background-color: #f4fffd;
   }
   
   .container {
     display: flex;
     min-height: 100vh;
+    width: 100%;
   }
   
   /* Crypto List Styles */
   .crypto-list {
-    width: 33.333%;
+    width: 20%;
     background-color: #ffffff;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     overflow-y: auto;
+    border-top: 1px solid #d3d3d3;  /* Línea gris en el borde superior */
+    border-bottom: 1px solid #d3d3d3; /* Línea gris en el borde inferior */
   }
   
   .crypto-list-item {
@@ -25,6 +28,8 @@ body {
     padding: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border-top: 1px solid #d3d3d3;  /* Línea gris en el borde superior */
+    border-bottom: 1px solid #d3d3d3; /* Línea gris en el borde inferior */
   }
   
   .crypto-list-item:hover {
@@ -32,7 +37,7 @@ body {
   }
   
   .crypto-list-item.selected {
-    background-color: #e0f2fe;
+    background-color: #bebebe;
   }
   
   .crypto-list-item img {
@@ -51,7 +56,12 @@ body {
     color: #6b7280;
     margin: 0;
   }
-  
+  .crypto-details-container{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding-left: 1rem;
+  }
   /* Crypto Details Styles */
   .crypto-details {
     flex: 1;

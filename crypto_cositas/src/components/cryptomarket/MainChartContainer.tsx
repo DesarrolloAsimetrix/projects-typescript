@@ -31,8 +31,10 @@ const MainChartContainer: React.FC<MainChartContainerProps> = ({ coinId, apiKey 
       </div>
 
       {/* Componentes de gráficos */}
+      <div className="chart-container">
       <CryptoApexChart coinId={coinId} apiKey={apiKey} days={days} />
       <CryptoPlotlyChart coinId={coinId} apiKey={apiKey} days={days} />
+      </div>
     </div>
   );
 };
