@@ -42,11 +42,16 @@ const CryptoPlotlyChart: React.FC<CryptoPlotlyChartProps> = ({ coinId, apiKey, d
               x: chartData.map(([timestamp]) => new Date(timestamp)),
               y: chartData.map(([, price]) => price),
               type: 'scatter',
-              mode: 'lines+markers',
+              mode: 'lines',
               marker: { color: '#646363' }
             }
           ]}
-          layout={{ xaxis: { title: 'Fecha' }, yaxis: { title: 'Precio (USD)' } }}
+          layout={{ 
+            xaxis: { title: 'Fecha' }, 
+            yaxis: { title: 'Precio (USD)' } ,
+            paper_bgcolor: 'transparent',  // Fondo transparente para todo el gráfico
+            plot_bgcolor: 'transparent'    // Fondo transparente solo para el área del gráfico
+        }}
         />
       )}
     </div>
