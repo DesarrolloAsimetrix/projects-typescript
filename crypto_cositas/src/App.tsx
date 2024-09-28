@@ -8,7 +8,7 @@ function App() {
     <>
       {/* Usar el componente Header */}
       
-      <h1>Vite + React dededede dad aedae daed aedae ade adededadaedaedaedaedaedaedaedaedaedaeddeadaedaedaed</h1>
+      <h1>Aprendiendo Typescript con Crypto cositas y ChatGPT</h1>
       
       
     </>
