@@ -70,14 +70,20 @@ body {
   }
   /* Crypto Details Styles */
   .crypto-details {
+    display: flex;
+    align-items: flex-start; /* Alineamos ambos al inicio verticalmente */
+    /*justify-content: space-between;*/ /* Separamos los dos elementos horizontalmente */
+    gap: 2rem; /* Espacio entre .crypto-header y .crypto-grid */
+    flex-wrap: wrap; 
     flex: 1;
     padding: 1.5rem;
   }
   
   .crypto-header {
+    
     display: flex;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.0rem;
   }
   
   .crypto-header img {
