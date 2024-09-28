@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CryptoListItem from './CryptoListItem'
 import CryptoDetails from './CryptoDetails'
-import CryptoApex from './cryptoApexChart'
+import MainChartContainer  from './MainChartContainer'
 
 interface Crypto {
   id: string
@@ -52,7 +52,7 @@ const CryptoMarket: React.FC = () => {
         {selectedCrypto && (
           <>
             <CryptoDetails crypto={selectedCrypto} />
-            <CryptoApex coinId={selectedCrypto.id} apiKey={apiKey} /> {/* Incluimos el gráfico */}
+            <MainChartContainer coinId={selectedCrypto.id} apiKey={apiKey} /> {/* Incluimos el gráfico */}
           </>
         )}
       </div>

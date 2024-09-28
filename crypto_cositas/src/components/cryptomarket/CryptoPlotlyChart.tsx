@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import ApexCharts from 'react-apexcharts';
+import Plot from 'react-plotly.js';
 
-interface CryptoApexChartProps {
+interface CryptoPlotlyChartProps {
   coinId: string;
   apiKey: string;
   days: number;  // Recibimos los días como prop
 }
 
-const CryptoApexChart: React.FC<CryptoApexChartProps> = ({ coinId, apiKey, days }) => {
+const CryptoPlotlyChart: React.FC<CryptoPlotlyChartProps> = ({ coinId, apiKey, days }) => {
   const [chartData, setChartData] = useState<number[][]>([]);
   const [loading, setLoading] = useState(true);
-
-  const chartOptions = {
-    chart: {
-      type: 'line',
-      zoom: { enabled: false }
-    },
-    xaxis: { type: 'datetime' },
-    stroke: { curve: 'smooth' },
-    yaxis: {
-      title: { text: 'Precio (USD)' },
-      labels: { formatter: (value: number) => value.toFixed(2) }
-    },
-    colors: ['#646363', '#545454'],
-  };
 
   useEffect(() => {
     const fetchChartData = async () => {
@@ -46,21 +32,25 @@ const CryptoApexChart: React.FC<CryptoApexChartProps> = ({ coinId, apiKey, days 
 
   return (
     <div className="crypto-chart">
-      <h3>Gráfica de {coinId} - ApexCharts.js</h3>
+      <h3>Gráfica de {coinId} - Plotly.js</h3>
       {loading ? (
         <div>Cargando datos...</div>
       ) : (
-        <ApexCharts
-          options={chartOptions}
-          series={[
-            { name: 'Precio', data: chartData.map(([timestamp, price]) => [timestamp, price]) }
+        <Plot
+          data={[
+            {
+              x: chartData.map(([timestamp]) => new Date(timestamp)),
+              y: chartData.map(([, price]) => price),
+              type: 'scatter',
+              mode: 'lines+markers',
+              marker: { color: '#646363' }
+            }
           ]}
-          type="line"
-          height={350}
+          layout={{ xaxis: { title: 'Fecha' }, yaxis: { title: 'Precio (USD)' } }}
         />
       )}
     </div>
   );
 };
 
-export default CryptoApexChart;
+export default CryptoPlotlyChart;
