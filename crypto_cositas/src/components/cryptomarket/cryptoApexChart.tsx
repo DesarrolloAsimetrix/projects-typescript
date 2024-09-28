@@ -22,7 +22,7 @@ const CryptoApexChart: React.FC<CryptoApexChartProps> = ({ coinId, apiKey, days 
       title: { text: 'Precio (USD)' },
       labels: { formatter: (value: number) => value.toFixed(2) }
     },
-    colors: ['#646363', '#545454'],
+    colors: ['#011936', '#545454'],
   };
 
   useEffect(() => {

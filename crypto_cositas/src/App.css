@@ -3,8 +3,11 @@
   margin: 0 auto;
   padding: 0.5rem;
   text-align: center;
+  color:#4f772d;
 }
-
+.h1 {
+  color: #4f772d;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

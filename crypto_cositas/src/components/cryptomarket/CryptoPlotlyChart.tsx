@@ -43,7 +43,7 @@ const CryptoPlotlyChart: React.FC<CryptoPlotlyChartProps> = ({ coinId, apiKey, d
               y: chartData.map(([, price]) => price),
               type: 'scatter',
               mode: 'lines',
-              marker: { color: '#646363' }
+              marker: { color: '#011936' }
             }
           ]}
           layout={{ 
