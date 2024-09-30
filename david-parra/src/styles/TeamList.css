@@ -1,0 +1,42 @@
+/* Flex container for the team list */
+.team-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* Style for individual team cards */
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc(15% - 10px); /* 20% of the width per card, minus some space for margins */
+  margin: 10px 0;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.team-card:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Style for the team logos */
+.team-logo {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+/* Style for the team names */
+.team-name {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
