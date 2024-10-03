@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CryptoApexChart from './CryptoApexChart';
 import CryptoPlotlyChart from './CryptoPlotlyChart';
+import './MainChartContainer.css'; // Importar el archivo CSS para el tooltip
 
 interface MainChartContainerProps {
   coinId: string;
@@ -9,6 +10,8 @@ interface MainChartContainerProps {
 
 const MainChartContainer: React.FC<MainChartContainerProps> = ({ coinId, apiKey }) => {
   const [days, setDays] = useState(1); // Estado para el número de días
+  const [showAverage, setShowAverage] = useState(false);  // Estado para la media
+  const [showBollingerBands, setShowBollingerBands] = useState(false);  // Estado para las bandas de Bollinger
 
   return (
     <div>
@@ -30,10 +33,34 @@ const MainChartContainer: React.FC<MainChartContainerProps> = ({ coinId, apiKey 
         </button>
       </div>
 
+      {/* Checkboxes para la media y las Bandas de Bollinger */}
+      <div className="analysis-options">
+        <label className="tooltip">
+          <input
+            type="checkbox"
+            checked={showAverage}
+            onChange={() => setShowAverage(!showAverage)}
+          />
+          Media Promedio Móvil
+          <span className="tooltiptext">Compra cuando el precio esté debajo de la media. Vende cuando esté por encima.</span>
+        </label>
+        <label className="tooltip">
+          <input
+            type="checkbox"
+            checked={showBollingerBands}
+            onChange={() => setShowBollingerBands(!showBollingerBands)}
+          />
+          Bandas de Bollinger
+          <span className="tooltiptext">Compra cuando el precio toque la banda inferior. Vende cuando toque la superior.</span>
+        </label>
+      </div>
+      
       {/* Componentes de gráficos */}
       <div className="chart-container">
-      <CryptoApexChart coinId={coinId} apiKey={apiKey} days={days} />
-      <CryptoPlotlyChart coinId={coinId} apiKey={apiKey} days={days} />
+      <CryptoApexChart coinId={coinId} apiKey={apiKey} days={days} showAverage={showAverage}
+          showBollingerBands={showBollingerBands}/>
+      <CryptoPlotlyChart coinId={coinId} apiKey={apiKey} days={days} showAverage={showAverage}
+          showBollingerBands={showBollingerBands}/>
       </div>
     </div>
   );
