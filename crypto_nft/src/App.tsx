@@ -117,7 +117,7 @@ export function App() {
   const [opened, { toggle }] = useDisclosure();
   const [nfts, setNfts] = useState<Nft[]>([]); // Estado para almacenar los NFTs
   const [loading, setLoading] = useState<boolean>(true); // Estado de carga
-  const [selectedNft, setSelectedNft] = useState<Nft | null>(null); // Estado para el NFT seleccionado
+  const [selectedNft, setSelectedNft] = useState<NftDetails | null>(null); // Estado para el NFT seleccionado
 
   const apiKey = import.meta.env.VITE_COINGECKO_API_KEY;
 
@@ -144,10 +144,26 @@ export function App() {
       });
   }, [apiKey]);
   
+  
+  // Función para manejar el cambio en el Accordion
   const handleAccordionChange = (id: string) => {
-    const selected = nfts.find((nft) => nft.id === id);
-    setSelectedNft(selected || null);
+    fetch(
+      `https://api.coingecko.com/api/v3/nfts/${id}?x_cg_demo_api_key=${apiKey}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error en la solicitud');
+        }
+        return response.json();
+      })
+      .then((data: NftDetails) => {
+        setSelectedNft(data); // Aquí se asegura de que el NFT seleccionado sea el correcto
+      })
+      .catch((error) => {
+        console.error('Error fetching NFT details:', error);
+      });
   };
+
   
   return (
     <AppShell
@@ -170,9 +186,9 @@ export function App() {
             // con la data ya lista, se hace un map para creat el componente
             // del acordeon
             nfts.map((nft) => (
-              <Accordion variant="separated" radius="xl"  onChange={handleAccordionChange}>
+              <Accordion variant="separated" radius="xl" >
               <Accordion.Item key={nft.id} value={nft.id}>
-              <Accordion.Control >{nft.name}</Accordion.Control>
+              <Accordion.Control onClick={() => handleAccordionChange(nft.id)}>{nft.name}</Accordion.Control>
               <Accordion.Panel>Direción de contacto: {nft.contract_address}</Accordion.Panel>
             </Accordion.Item>
             </Accordion>
@@ -188,6 +204,8 @@ export function App() {
             <p>Dirección de contrato: {selectedNft.contract_address}</p>
             <p>Plataforma: {selectedNft.asset_platform_id}</p>
             <p>Símbolo: {selectedNft.symbol}</p>
+            <img src={selectedNft.image.small} alt={`${selectedNft.name} logo`} />
+            <p>{selectedNft.description}</p>
           </div>
         ) : (
           <p>Selecciona un NFT para ver los detalles</p>
