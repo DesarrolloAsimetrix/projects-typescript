@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { AppShell, Accordion , Group, ScrollArea, Skeleton } from '@mantine/core';
+import { AppShell, Accordion ,  Card, Image, Text, Badge, Button, Group,Box , ScrollArea, Skeleton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 
 import Header from './components/header/header.tsx';
 import Footer from './components/footer/footer.tsx';
+import './App.css';
 
 // se debe crear como un objeto con el tipo de datos que se espera recibir
 // de la api
@@ -186,10 +187,10 @@ export function App() {
             // con la data ya lista, se hace un map para creat el componente
             // del acordeon
             nfts.map((nft) => (
-              <Accordion variant="separated" radius="xl" >
-              <Accordion.Item key={nft.id} value={nft.id}>
-              <Accordion.Control onClick={() => handleAccordionChange(nft.id)}>{nft.name}</Accordion.Control>
-              <Accordion.Panel>Direción de contacto: {nft.contract_address}</Accordion.Panel>
+              <Accordion className="item-custom2" variant="separated" radius="xl" >
+              <Accordion.Item className="item-custom" key={nft.id} value={nft.id}>
+              <Accordion.Control className="item-custom3" onClick={() => handleAccordionChange(nft.id)}>{nft.name}</Accordion.Control>
+              <Accordion.Panel >Direción de contacto: {nft.contract_address}</Accordion.Panel>
             </Accordion.Item>
             </Accordion>
             ))
@@ -199,14 +200,29 @@ export function App() {
       </AppShell.Navbar>
       <AppShell.Main>
       {selectedNft ? (
-          <div>
-            <h2>{selectedNft.name}</h2>
-            <p>Dirección de contrato: {selectedNft.contract_address}</p>
-            <p>Plataforma: {selectedNft.asset_platform_id}</p>
-            <p>Símbolo: {selectedNft.symbol}</p>
-            <img src={selectedNft.image.small} alt={`${selectedNft.name} logo`} />
-            <p>{selectedNft.description}</p>
-          </div>
+          <Card shadow="sm" padding="lg" radius="md" withBorder>
+          <Card.Section>
+            <Image
+              src={selectedNft.banner_image}
+              height={320}
+              alt="Norway"
+            />
+          </Card.Section>
+    
+          <Group justify="space-between" mt="md" mb="xs">
+            <Text fw={500}>{selectedNft.name}</Text>
+            <Badge color="pink">USD {selectedNft.floor_price.usd}</Badge>
+          </Group>
+    
+          <Text size="sm" c="dimmed">
+          <div dangerouslySetInnerHTML={{ __html: selectedNft.description }} />
+          </Text>
+    
+          <Button color="blue" fullWidth mt="md" radius="md" onClick={() => window.location.href = selectedNft.links.homepage}>
+            Go to project homepage
+          </Button>
+        </Card>
+        
         ) : (
           <p>Selecciona un NFT para ver los detalles</p>
         )}
