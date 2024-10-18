@@ -12,20 +12,10 @@ type TeamListProps = {
 }
 
 const TeamList: FC<TeamListProps> = ({ teams, onSelectTeam }) => {
-  //return (
-  //  <div className="team-list">
-  //    {teams.map((team) => (
-  //      <div className="team-card" key={team.abbreviation} onClick={() => onSelectTeam(team)}>
-  //        <img src={team.logo} alt={`${team.name} logo`} className="team-logo" />
-  //        <div className="team-name">{team.name}</div>
-  //      </div>
-  //    ))}
-  //  </div>
-  //);
   return (
     <Row gutter={[16, 16]}>
       {teams.map((team) => (
-        <Col xs={24} sm={12} md={8} lg={6} key={team.abbreviation}>
+        <Col xs={24} sm={12} md={8} lg={6} xl={3} key={team.abbreviation}>
           <Card
             hoverable
             cover={
