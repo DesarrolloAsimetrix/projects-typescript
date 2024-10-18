@@ -2,16 +2,21 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import csv from 'csv-parser';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 const port = 3000;
 const users: any[] = [];
 
 const csvFilePath = path.join(__dirname, 'data/CamiTracker.csv');
 
+var count = 0;
+
 fs.createReadStream(csvFilePath)
   .pipe(csv())
   .on('data', (row) => {
+    row.id = count++;
     users.push(row);
   })
   .on('end', () => {
