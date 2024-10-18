@@ -13,7 +13,10 @@
   border-collapse: collapse;
   margin: 20px 0;
   font-size: 16px;
-  text-align: left;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /*text-align: left;*/
   table-layout: auto; /* Allow the table to adjust column widths */
 }
 
@@ -50,3 +53,65 @@
   overflow: hidden;
   text-overflow: ellipsis; /* Truncate content with ellipsis if it's too long */
 }
+
+.search-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.close-button {
+  align-self: flex-end;
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.player-image-placeholder {
+  width: 100px;
+  height: 100px;
+  background-color: #ddd;
+  border-radius: 50%;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  gap: 10px;
+}
+
