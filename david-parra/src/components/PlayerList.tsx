@@ -1,8 +1,14 @@
-import { useEffect, useState, ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
+import { Table, Input, Space, Typography } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 import type { FC } from 'react';
 import type { Player } from '../types/player';
 import '../styles/PlayerList.css'; 
 import PlayerStatsModal from './PlayerStatsModal';
+
+
+const { Search } = Input;
+const { Text } = Typography;
 
 type PlayerListProps = {
   teamId: number;
@@ -10,23 +16,12 @@ type PlayerListProps = {
 
 const PlayerList: FC<PlayerListProps> = ({ teamId }) => {
   const [players, setPlayers] = useState<Player[]>([]);
-  const [filteredPlayers, setFilteredPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [searchQuery, setSearchQuery] = useState<string>(''); // State for search query
+  const [sortOrder, setSortOrder] = useState<'ascend' | 'descend'>('ascend');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const openPlayerModal = (player: Player) => {
-    setSelectedPlayer(player);
-    setIsModalOpen(true);
-  };
-
-  const closePlayerModal = () => {
-    setSelectedPlayer(null);
-    setIsModalOpen(false);
-  };
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -43,11 +38,10 @@ const PlayerList: FC<PlayerListProps> = ({ teamId }) => {
           throw new Error('Failed to fetch players');
         }
         const data = await response.json();
-        setPlayers(data.data); // Extract players from the response
-        setFilteredPlayers(data.data); // Initially show all players
+        setPlayers(data.data);
         setLoading(false);
       } catch (err) {
-        setError('An error occurred');
+        setError('An error occurred while fetching players');
         setLoading(false);
       }
     };
@@ -55,79 +49,96 @@ const PlayerList: FC<PlayerListProps> = ({ teamId }) => {
     fetchPlayers();
   }, [teamId]);
 
-  const sortByDraftYear = (playersToSort: Player[]) => {
-    const sortedPlayers = [...playersToSort].sort((a, b) =>
-      sortOrder === 'asc' ? a.draft_year - b.draft_year : b.draft_year - a.draft_year
-    );
-    setFilteredPlayers(sortedPlayers); // Set sorted players to the filtered list
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'); // Toggle sorting order
-  };
-  
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.toLowerCase();
-    setSearchQuery(query);
-
-    // Filter players by first name or last name based on the search query
-    const filtered = players.filter(player =>
-      player.first_name.toLowerCase().includes(query) ||
-      player.last_name.toLowerCase().includes(query)
-    );
-    setFilteredPlayers(filtered);
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
   };
 
-  if (loading) {
-    return <p>Loading players...</p>;
-  }
+  const openPlayerModal = (player: Player) => {
+    setSelectedPlayer(player);
+    setIsModalOpen(true);
+  };
+
+  const closePlayerModal = () => {
+    setSelectedPlayer(null);
+    setIsModalOpen(false);
+  };
+
+  const columns: ColumnsType<Player> = [
+    {
+      title: 'Name',
+      key: 'name',
+      render: (_, record) => (
+        <a onClick={() => openPlayerModal(record)}>{`${record.first_name} ${record.last_name}`}</a>
+      ),
+      sorter: (a, b) => `${a.first_name} ${a.last_name}`.localeCompare(`${b.first_name} ${b.last_name}`),
+    },
+    {
+      title: 'Position',
+      dataIndex: 'position',
+      key: 'position',
+    },
+    {
+      title: 'Jersey #',
+      dataIndex: 'jersey_number',
+      key: 'jersey_number',
+    },
+    {
+      title: 'College',
+      dataIndex: 'college',
+      key: 'college',
+    },
+    {
+      title: 'Draft Year',
+      dataIndex: 'draft_year',
+      key: 'draft_year',
+      sorter: (a, b) => a.draft_year - b.draft_year,
+      sortOrder: sortOrder,
+    },
+    {
+      title: 'Draft Round',
+      dataIndex: 'draft_round',
+      key: 'draft_round',
+    },
+    {
+      title: 'Draft Number',
+      dataIndex: 'draft_number',
+      key: 'draft_number',
+    },
+  ];
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return <Text type="danger">{error}</Text>;
   }
 
   return (
-    <div>
-      <input
-        type="text"
+    <Space direction="vertical" style={{ width: '100%' }}>
+      <Search
         placeholder="Search by first or last name..."
-        value={searchQuery}
-        onChange={handleSearch}
-        className="search-input"
+        allowClear
+        enterButton="Search"
+        size="large"
+        onSearch={handleSearch}
       />
-      <table className="player-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Jersey #</th>
-            <th>College</th>
-            <th onClick={() => sortByDraftYear(filteredPlayers)} className="sortable-header">
-              Draft Year {sortOrder === 'asc' ? '↑' : '↓'}
-            </th>
-            <th>Draft Round</th>
-            <th>Draft Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredPlayers.map((player) => (
-            <tr key={player.id}>
-              <td>
-                <span className="clickable-name" onClick={() => openPlayerModal(player)}>
-                  {`${player.first_name} ${player.last_name}`}
-                </span>
-              </td>
-              <td>{player.position}</td>
-              <td>{player.jersey_number}</td>
-              <td>{player.college}</td>
-              <td>{player.draft_year}</td>
-              <td>{player.draft_round}</td>
-              <td>{player.draft_number}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Table
+        columns={columns}
+        dataSource={players.filter(player =>
+          player.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          player.last_name.toLowerCase().includes(searchQuery.toLowerCase())
+        )}
+        rowKey="id"
+        loading={loading}
+        pagination={{ pageSize: 10 }}
+        onChange={(pagination, filters, sorter) => {
+          if (Array.isArray(sorter)) return;
+          if (sorter.field === 'draft_year') {
+            setSortOrder(sorter.order || 'ascend');
+          }
+        }}
+      />
       {selectedPlayer && (
         <PlayerStatsModal
           playerId={selectedPlayer.id}
-          season={2023}  // You can make this dynamic if needed
+          season={2023}
           isOpen={isModalOpen}
           onClose={closePlayerModal}
           playerName={`${selectedPlayer.first_name} ${selectedPlayer.last_name}`}
@@ -135,9 +146,8 @@ const PlayerList: FC<PlayerListProps> = ({ teamId }) => {
           jerseyNumber={selectedPlayer.jersey_number}
         />
       )}
-    </div>
+    </Space>
   );
 };
 
 export default PlayerList;
-
